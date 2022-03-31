@@ -1,56 +1,44 @@
 const { randomInt } = require("crypto");
 
 //Se define la dimension las matrices. Ejemplo: matriz de 3x3
-const nxn = randomInt(2, 5);
+const filas = randomInt(2, 5);
+const columnas = randomInt(2, 5);
 
 //Se crean las matrices
-function crearMatrizBidimencional(paramNxN) {
+function crearMatrizBidimencional(paramFilas, paramColumnas) {
   const array = [];
-  for (let i = 0; i < paramNxN; i++) {
+  for (let i = 0; i < paramFilas; i++) {
     array[i] = [];
-    for (let j = 0; j < paramNxN; j++) {
+    for (let j = 0; j < paramColumnas; j++) {
       array[i][j] = randomInt(1, 100);
     }
   }
   return array;
 }
 
-//Se crea la tercera Matriz teniendo en cuenta que la primera y la segunda deben ser del mismo tamaño. La cual almacenara el resultado de la multiplicacion de las dos matrices
-function CrearMatriz3(matriz1, matriz2) {
-  const matriz = [];
-  for (let i = 0; i < matriz1; i++) {
-    matriz[i] = [];
-    for (let j = 0; j < matriz2; j++) {
-      matriz[i][j] = 0;
-    }
-  }
-  return matriz;
-}
-
-//Se guarda en una constante el resultado de la creacion de la primer  matriz
-const matriz1 = crearMatrizBidimencional(nxn);
-
-//Se guarda en una constante el resultado de la creacion de la segunda  matriz
-const matriz2 = crearMatrizBidimencional(nxn);
-
-console.log(matriz1.length, matriz2[1].length);
-//Se guarda en una constante el resultado de la creacion de la tercera  matriz
-const matriz3 = CrearMatriz3(matriz1.length, matriz2[0].length);
-
-//Se guarda en una constante el resultado de la multiplicacion de las matrices
-const Resultado = multiplicacionMatrices(matriz1, matriz2, matriz3);
-
 //Se crea la funcion que realiza la multiplicacion de las matrices
-function multiplicacionMatrices(paramArray1, paramArray2, paramArray3) {
-  for (let i = 0; i < paramArray1.length; i++) {
-    for (let j = 0; j < paramArray1[i].length; j++) {
-      for (let k = 0; k < paramArray1[i].length; k++) {
-        paramArray3[i][j] += paramArray1[i][k] * paramArray2[k][j];
+function multiplicacionMatrices(paramMatriz1, paramMatriz2) {
+  const matriz3 = [0];
+  for (let i = 0; i < paramMatriz1.length; i++) {
+    matriz3[i] = [0];
+    for (let j = 0; j < paramMatriz2[0].length; j++) {
+      matriz3[i][j] = 0;
+      for (let k = 0; k < paramMatriz1[0].length; k++) {
+        matriz3[i][j] += paramMatriz1[i][k] * paramMatriz2[k][j];
       }
     }
   }
-  return paramArray3;
+  return matriz3;
 }
+
+//Se guarda en una constante el resultado de la creacion de la primer  matriz
+const matriz1 = crearMatrizBidimencional(filas, columnas);
+
+//Se guarda en una constante el resultado de la creacion de la segunda  matriz
+const matriz2 = crearMatrizBidimencional(columnas, filas);
+
+//Se guarda en una constante el resultado de la multiplicacion de las matrices
+const Resultado = multiplicacionMatrices(matriz1, matriz2);
 
 //Se imprimen las dos matrices a operar y el resultado de la multiplicacion de las mismas
 console.log(
